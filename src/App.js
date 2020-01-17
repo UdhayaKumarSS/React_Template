@@ -1,28 +1,31 @@
 // @flow
 
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { logger } from 'redux-logger'
+import { withRouter } from 'react-router-dom'
 
-function App() {
+import reducers from './reducers'
+import rootSaga from './sagas'
+import AppRoutes from './AppRoutes'
+
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(reducers, applyMiddleware(sagaMiddleware, logger))
+
+sagaMiddleware.run(rootSaga)
+
+const App = ({ history }) => {
+  if (history.location.pathname === '/') {
+    history.location.pathname = '/login'
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <AppRoutes />
+    </Provider>
   )
 }
 
-export default App
+export default withRouter(App)
