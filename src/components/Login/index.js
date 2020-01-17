@@ -5,7 +5,11 @@ import * as actions from '../../actions/userActions'
 import logo from '../../logo.svg'
 import '../../App.css'
 
-const Login = ({ getUser }) => {
+type Props = {
+  getUser: (any) => mixed
+}
+
+const Login = ({ getUser }: Props) => {
   useEffect(() => {
     // dispatching action call
     getUser({ userId: 'testLogin2' })

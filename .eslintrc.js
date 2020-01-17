@@ -31,7 +31,6 @@ module.exports = {
   },
   rules: {
     // Javascript
-    "react/prop-types": [0],
     'arrow-parens': [2, 'always'],
     'class-methods-use-this': [0],
     'consistent-return': [0],

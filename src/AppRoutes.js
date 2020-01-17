@@ -1,17 +1,30 @@
+// @flow
+
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
+
 import Login from './components/Login'
 import Home from './components/Home'
 
-const AppRoutes = () => {
+import { type History } from 'react-router-dom'
+
+type Props = {
+  history: History
+}
+
+const AppRoutes = ({ history }: Props) => {
+  if (history.location.pathname === '/') {
+    history.location.pathname = '/login'
+  }
+
   return (
-    <div>
+    <React.Fragment>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/home" component={Home} />
       </Switch>
-    </div>
+    </React.Fragment>
   )
 }
 
-export default AppRoutes
+export default withRouter(AppRoutes)
