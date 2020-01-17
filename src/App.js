@@ -5,8 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { logger } from 'redux-logger'
-import { withRouter } from 'react-router-dom'
-
+import { BrowserRouter } from 'react-router-dom'
 import reducers from './reducers'
 import rootSaga from './sagas'
 import AppRoutes from './AppRoutes'
@@ -16,16 +15,14 @@ const store = createStore(reducers, applyMiddleware(sagaMiddleware, logger))
 
 sagaMiddleware.run(rootSaga)
 
-const App = ({ history }) => {
-  if (history.location.pathname === '/') {
-    history.location.pathname = '/login'
-  }
-
+const App = () => {
   return (
-    <Provider store={store}>
-      <AppRoutes />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
+    </BrowserRouter>
   )
 }
 
-export default withRouter(App)
+export default App
